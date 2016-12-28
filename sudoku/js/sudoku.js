@@ -13,6 +13,24 @@
 
 var my_sudoku = {};
 
+function updateCell(array) {
+
+    var cellIndex  = array.cellIndex;
+    var rowIndex = array.parentNode.rowIndex;
+
+    var number = prompt("Please add a new number (cell: " + cellIndex + " / row: " + rowIndex, "0");
+
+    if (number != null) {
+        number = parseInt(number, 10);
+    }
+
+    if (Number.isInteger(number)) {
+        my_sudoku.updateValue(number,rowIndex,cellIndex);
+        my_sudoku.updateHTMLtable();
+    }
+}
+
+
 class Sudoku {
 
     constructor(ncells) {
@@ -23,11 +41,9 @@ class Sudoku {
         }
 
         this.ncells = ncells;
-
         this.matrix = [];
 
         for (var i = 0; i < ncells; i++) {
-
             this.matrix[i] = [];
 
             for (var j = 0; j < ncells; j++) {
@@ -37,6 +53,7 @@ class Sudoku {
     }
 
     print() {
+
         console.log(' ')
 
         let c = ' ' + '-'.repeat(4 * this.ncells - 1);
@@ -57,7 +74,38 @@ class Sudoku {
     }
 
 
-    init(value, x, y) {
+    updateHTMLtable() {
+
+        var result = "<table border=10>";
+
+        var htmlarray_id = document.getElementById("thisTable");
+
+        this.array_id = htmlarray_id;
+
+        for (var i = 0; i < this.ncells; i++) {
+            result += '<tr>';
+
+            for (var j = 0; j < this.ncells; j++) {
+                result += '<td>' + this.matrix[i][j] + "</td>";
+            }
+            result += "</tr>";
+        }
+        result += "</table>";
+
+        this.array_id.innerHTML = result;
+
+        var cells = htmlarray_id.getElementsByTagName("td");
+
+        for(var i = 0; i < cells.length; i++){
+
+            var cell = cells[i];
+            cell.onclick = function(){
+                updateCell(this);
+            };
+        }
+    }
+
+    updateValue(value, x, y) {
         this.matrix[x][y] = value;
     }
 
@@ -67,59 +115,19 @@ class Sudoku {
 }
 
 
-function updateTable(myArray) {
-
-    var result = "<table border=10>";
-
-    for (var i = 0; i < myArray.length; i++) {
-
-        result += "<tr>";
-
-        for (var j = 0; j < myArray[i].length; j++) {
-            result += "<td>" + myArray[i][j] + "</td>";
-        }
-        result += "</tr>";
-    }
-    result += "</table>";
-
-    return result;
-}
-
-function tableText(tableCell) {
-
-    var number = prompt("Please add a new number", "0");
-    if (number != null) {
-        number = parseInt(number, 10);
-
-        if (Number.isInteger(number)) {
-            tableCell.innerHTML = number;
-            console.log(number);
-        }
-    }
-
-}
-
-
-function Click() {
+function NewSudoku() {
 
     var ncells = document.getElementById("id_ncell").value;
+
     my_sudoku = new Sudoku(ncells);
 
     my_sudoku.print(); // optional print to the console
 
-    // Update the HTML table
-    document.getElementById("thisTable").innerHTML = updateTable(my_sudoku.get_array());
+    my_sudoku.updateHTMLtable();
 
-    var table = document.getElementById("thisTable");
+    return 0;
 
-    if (table != null) {
-        for (var i = 0; i < table.rows.length; i++) {
-            for (var j = 0; j < table.rows[i].cells.length; j++)
-            table.rows[i].cells[j].onclick = function () {
-                tableText(this);
-            };
-        }
-    }
+
 }
 
 function Debug() {
