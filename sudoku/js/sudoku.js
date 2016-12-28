@@ -1,69 +1,66 @@
 // Sudoku solver
 //==============
 
-// 1. Create object - done
-// 2. Print object in console - done
-// 3. Print in HTML when click button - done
+/**
+ Features:
+ 1. Create object - done
+ 2. Print object in console - done
+ 3. Print in HTML when click button - done
+ 4. Input box & initialize array accordingly
+*/
 
 "use strict";
 
+var my_sudoku = {};
 
 class Sudoku {
 
-    constructor(rows,columns){
+    constructor(ncells) {
 
-        if(rows > 9){
-            console.log("Error. Row > 9")
+        if (ncells > 10) {
+            console.log("Error. Number of cells > 10")
             return 0;
         }
 
-        if(columns > 9){
-            console.log("Error. Columns > 9")
-            return 0;
-        }
-
-        this.rows = rows;
-        this.columns = columns;
+        this.ncells = ncells;
 
         this.matrix = [];
 
-        for(var i=0;i<rows;i++){
+        for (var i = 0; i < ncells; i++) {
 
             this.matrix[i] = [];
 
-            for(var j=0;j<columns;j++){
+            for (var j = 0; j < ncells; j++) {
                 this.matrix[i][j] = Math.floor(Math.random() * 10) + 0;
             }
         }
     }
 
-    print(){
+    print() {
         console.log(' ')
 
-        let c = ' ' + '-'.repeat(4*this.columns-1);
+        let c = ' ' + '-'.repeat(4 * this.ncells - 1);
         console.log(c);
 
-        for(var i=0;i<this.rows;i++){
+        for (var i = 0; i < this.ncells; i++) {
             c = '|'
-            for(var j=0;j<this.columns;j++){
+            for (var j = 0; j < this.ncells; j++) {
 
-                c = c + ' ' + this.matrix[i][j]+ ' |';
+                c = c + ' ' + this.matrix[i][j] + ' |';
             }
             console.log(c);
 
-            c = ' ' + '-'.repeat(4*this.columns-1);
+            c = ' ' + '-'.repeat(4 * this.ncells - 1);
             console.log(c);
 
         }
     }
 
-    init(value,x,y) {
+    init(value, x, y) {
         this.matrix[x][y] = value;
-
     }
 
     get_array() {
-
         return this.matrix;
     }
 }
@@ -72,15 +69,15 @@ class Sudoku {
 
 function updateTable(myArray) {
 
-    var result = "<table border=10>"; 
+    var result = "<table border=10>";
 
 
-    for(var i=0; i<myArray.length; i++) {
+    for (var i = 0; i < myArray.length; i++) {
 
         result += "<tr>";
 
-        for(var j=0; j<myArray[i].length; j++){
-            result += "<td>"+myArray[i][j]+"</td>";
+        for (var j = 0; j < myArray[i].length; j++) {
+            result += "<td>" + myArray[i][j] + "</td>";
         }
         result += "</tr>";
     }
@@ -90,14 +87,14 @@ function updateTable(myArray) {
 }
 
 
-function Click(){
+function Click() {
 
-    var a = new Sudoku(9,9);
+    var ncells = document.getElementById("id_ncell").value;
+    my_sudoku = new Sudoku(ncells);
 
-    a.print(); // optional print to the console
+    my_sudoku.print(); // optional print to the console
 
     // Update the HTML table
-    document.getElementById("thisTable").innerHTML = updateTable(a.get_array());
+    document.getElementById("thisTable").innerHTML = updateTable(my_sudoku.get_array());
 
 }
-
