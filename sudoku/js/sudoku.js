@@ -6,7 +6,7 @@
  1. Create object - done
  2. Print object in console - done
  3. Print in HTML when click button - done
- 4. Input box & initialize array accordingly
+ 4. Input box & initialize array accordingly - done
 */
 
 "use strict";
@@ -31,7 +31,7 @@ class Sudoku {
             this.matrix[i] = [];
 
             for (var j = 0; j < ncells; j++) {
-                this.matrix[i][j] = Math.floor(Math.random() * 10) + 0;
+                this.matrix[i][j] = ' '; // Math.floor(Math.random() * 10) + 0;
             }
         }
     }
@@ -56,6 +56,7 @@ class Sudoku {
         }
     }
 
+
     init(value, x, y) {
         this.matrix[x][y] = value;
     }
@@ -66,11 +67,9 @@ class Sudoku {
 }
 
 
-
 function updateTable(myArray) {
 
     var result = "<table border=10>";
-
 
     for (var i = 0; i < myArray.length; i++) {
 
@@ -86,6 +85,20 @@ function updateTable(myArray) {
     return result;
 }
 
+function tableText(tableCell) {
+
+    var number = prompt("Please add a new number", "0");
+    if (number != null) {
+        number = parseInt(number, 10);
+
+        if (Number.isInteger(number)) {
+            tableCell.innerHTML = number;
+            console.log(number);
+        }
+    }
+
+}
+
 
 function Click() {
 
@@ -97,4 +110,21 @@ function Click() {
     // Update the HTML table
     document.getElementById("thisTable").innerHTML = updateTable(my_sudoku.get_array());
 
+    var table = document.getElementById("thisTable");
+
+    if (table != null) {
+        for (var i = 0; i < table.rows.length; i++) {
+            for (var j = 0; j < table.rows[i].cells.length; j++)
+            table.rows[i].cells[j].onclick = function () {
+                tableText(this);
+            };
+        }
+    }
 }
+
+function Debug() {
+
+    if(my_sudoku != null)
+        my_sudoku.print(); // optional print to the console
+}
+
