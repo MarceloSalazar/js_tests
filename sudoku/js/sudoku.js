@@ -7,6 +7,7 @@
  2. Print object in console - done
  3. Print in HTML when click button - done
  4. Input box & initialize array accordingly - done
+ 5. Check if a number exists in row/column - done
 */
 
 "use strict";
@@ -25,7 +26,18 @@ function updateCell(array) {
     }
 
     if (Number.isInteger(number)) {
-        my_sudoku.updateValue(number,rowIndex,cellIndex);
+
+        if (my_sudoku.check_number_row(number,rowIndex) == true){
+            console.log("Number exists");
+        }
+        else if(my_sudoku.check_number_column(number,cellIndex) == true){
+            console.log("Number exists");
+        }
+        else{
+            my_sudoku.updateValue(number,rowIndex,cellIndex);
+            console.log("Updated");
+        }
+
         my_sudoku.updateHTMLtable();
     }
 }
@@ -36,7 +48,7 @@ class Sudoku {
     constructor(ncells) {
 
         if (ncells > 10) {
-            console.log("Error. Number of cells > 10")
+            console.log("Error. Number of cells > 9")
             return 0;
         }
 
@@ -112,6 +124,34 @@ class Sudoku {
     get_array() {
         return this.matrix;
     }
+
+    check_number_row(number,row) {
+
+        var exist = false;
+
+        for(var i=0;i<this.ncells;i++){
+
+            if(this.matrix[row][i] == number){
+                exist = true;
+            }
+        }
+        return exist;
+    }
+
+    check_number_column(number,column) {
+
+    var exist = false;
+
+    for(var i=0;i<this.ncells;i++){
+
+        if(this.matrix[i][column] == number){
+            exist = true;
+        }
+    }
+    return exist;
+    }
+
+
 }
 
 
