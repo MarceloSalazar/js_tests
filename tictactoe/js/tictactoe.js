@@ -5,7 +5,6 @@ function NewGame() {
 
     var result = '';
 
-
     for (var i = 0; i < 3; i++) {
 
         result += '<tr>';
