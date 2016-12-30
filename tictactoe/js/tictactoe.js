@@ -1,1 +1,3 @@
-console.log("Hello tictactoe");
+function NewGame() {
+    console.log("Hello tictactoe");
+}
