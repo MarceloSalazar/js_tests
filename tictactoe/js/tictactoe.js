@@ -26,8 +26,18 @@ function init_array() {
                 my_array[i][j] =  ' ';
             }
         }
+}
 
+function updateCell(array) {
 
+    var cellIndex  = array.cellIndex;
+    var rowIndex = array.parentNode.rowIndex;
+
+    my_array[rowIndex][cellIndex] = 'x';
+
+    console.log("row:" + rowIndex);
+    console.log("col:" + cellIndex);
+    print_HTML();
 }
 
 function print_HTML() {
@@ -50,6 +60,16 @@ function print_HTML() {
     htmlarray_id.innerHTML = result;
 
     console.log("Hello tictactoe");
+
+    var cells = htmlarray_id.getElementsByTagName("td");
+
+    for(var i = 0; i < cells.length; i++){
+
+        var cell = cells[i];
+        cell.onclick = function(){
+            updateCell(this);
+        };
+    }
 
 }
 
