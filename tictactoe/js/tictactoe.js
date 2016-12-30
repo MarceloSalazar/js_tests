@@ -1,4 +1,36 @@
-function NewGame() {
+
+var my_array = {};
+
+
+function print_console() {
+
+    console.log(' ')
+
+
+    for (var i = 0; i < 3; i++) {
+        c = i + ':'
+        for (var j = 0; j < 3; j++) {
+
+            c += my_array[i][j] + ' ';
+        }
+        console.log(c);
+    }
+}
+
+function init_array() {
+
+    for (var i = 0; i < 3; i++) {
+            my_array[i] = [];
+
+            for (var j = 0; j < 3; j++) {
+                my_array[i][j] =  ' ';
+            }
+        }
+
+
+}
+
+function print_HTML() {
 
 
     var htmlarray_id = document.getElementById("mytable");
@@ -10,7 +42,7 @@ function NewGame() {
         result += '<tr>';
 
         for (var j = 0; j < 3; j++) {
-            result += '<td>' + 'x' + "</td>";
+            result += '<td>' + my_array[i][j] + "</td>";
         }
         result += "</tr>";
     }
@@ -19,4 +51,10 @@ function NewGame() {
 
     console.log("Hello tictactoe");
 
+}
+
+function NewGame() {
+    init_array();
+    print_console();
+    print_HTML();
 }
